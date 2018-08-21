@@ -4,9 +4,9 @@ import com.tyb.fish.interfaces.IPersonService;
 import com.tyb.fish.model.Person;
 import com.tyb.fishhost.depend.IComputeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author 陈小伟
@@ -38,4 +38,26 @@ public class PersonController {
         return personService.loadPersonBySysNo(sysNo);
     }
 
+
+    @RequestMapping("list")
+    public List<Person> GetPersonList() {
+        return personService.getPersonList();
+    }
+
+    @RequestMapping(value = "add", method = RequestMethod.POST)
+    public void AddPerson(@RequestBody Person person) {
+        personService.insert(person);
+    }
+
+
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public void EditPerson(@RequestBody Person person) {
+        personService.updateByPrimaryKey(person);
+    }
+
+
+    @RequestMapping(value = "delete/{sysNo}", method = RequestMethod.POST)
+    public void DeletePerson(@PathVariable int sysNo) {
+        personService.deleteByPrimaryKey(sysNo);
+    }
 }
