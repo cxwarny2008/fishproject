@@ -1,6 +1,6 @@
 package com.tyb.fishhost.controller;
 
-import com.tyb.fish.interfaces.IPersonService;
+import com.tyb.fish.service.interfaces.IPersonService;
 import com.tyb.fish.model.Person;
 import com.tyb.fishhost.depend.IComputeService;
 import org.springframework.beans.factory.annotation.Autowired;

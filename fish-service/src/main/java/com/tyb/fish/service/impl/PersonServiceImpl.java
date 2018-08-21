@@ -1,6 +1,6 @@
-package com.tyb.service.impl;
+package com.tyb.fish.service.impl;
 
-import com.tyb.fish.interfaces.IPersonService;
+import com.tyb.fish.service.interfaces.IPersonService;
 import com.tyb.fish.mapper.PersonMapper;
 import com.tyb.fish.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;

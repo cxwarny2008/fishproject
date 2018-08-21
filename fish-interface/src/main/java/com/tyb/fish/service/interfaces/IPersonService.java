@@ -1,4 +1,4 @@
-package com.tyb.fish.interfaces;
+package com.tyb.fish.service.interfaces;
 
 import com.tyb.fish.model.Person;
 
