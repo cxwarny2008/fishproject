@@ -12,7 +12,7 @@ import java.util.List;
 public class PersonServiceImpl implements IPersonService {
 
     @Autowired
-    PersonMapper personMapper;
+    private PersonMapper personMapper;
 
     @Override
     public Person loadPersonBySysNo(int sysNo) {

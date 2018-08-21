@@ -25,7 +25,7 @@ public class PersonController {
 
 
     @Autowired
-    IPersonService personService;
+    private IPersonService personService;
 
     @RequestMapping("get")
     public String getPersonName() {
