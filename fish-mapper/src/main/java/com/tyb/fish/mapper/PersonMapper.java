@@ -18,4 +18,7 @@ public interface PersonMapper {
     int updateByPrimaryKey(Person record);
 
     List<Person> getPersonList();
+
+    List<Person> queryPersonList();
+
 }

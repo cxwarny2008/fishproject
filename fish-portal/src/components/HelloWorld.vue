@@ -1,6 +1,6 @@
 <template>
-  <div class="hello">
-
+  <div class="hello" style="text-align: left">
+    <router-link to="editPerson">新增人员</router-link>
     <button @click="getPersonList">刷新列表</button>
     <table>
       <thead>
@@ -27,14 +27,10 @@
       </td>
       </tbody>
     </table>
-    <h1>{{ msg }}</h1>
-    <button @click="getFactorPayOut">查询</button>
-    <h1>{{ responseData }}</h1>
-    <h2>Essential Links</h2>
     <router-link to="home">Go to home</router-link>
     <router-link to="about">Go to about</router-link>
     <router-link to="test">Go to test</router-link>
-    <router-link to="editPerson">新增人员</router-link>
+
   </div>
 </template>
 

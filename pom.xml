@@ -14,6 +14,7 @@
         <module>fish-model</module>
         <module>fish-service</module>
         <module>fish-interface</module>
+        <module>fish-core</module>
     </modules>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>

@@ -1,5 +1,7 @@
 package com.tyb.fishhost.controller;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.tyb.fish.service.interfaces.IPersonService;
 import com.tyb.fish.model.Person;
 import com.tyb.fishhost.depend.IComputeService;
@@ -38,7 +40,10 @@ public class PersonController {
         return personService.loadPersonBySysNo(sysNo);
     }
 
-
+    @RequestMapping("query")
+    public PageInfo<Person> QueryPersonList(Integer pageNum, Integer pageSize) {
+        return personService.queryPersonList(pageNum,pageSize);
+    }
     @RequestMapping("list")
     public List<Person> GetPersonList() {
         return personService.getPersonList();

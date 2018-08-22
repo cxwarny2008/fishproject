@@ -1,5 +1,6 @@
 package com.tyb.fish.service.interfaces;
 
+import com.github.pagehelper.PageInfo;
 import com.tyb.fish.model.Person;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface IPersonService {
     void updateByPrimaryKey(Person person);
 
     void deleteByPrimaryKey(int sysNo);
+
+    PageInfo<Person> queryPersonList(Integer pageNum, Integer pageSize);
 }
