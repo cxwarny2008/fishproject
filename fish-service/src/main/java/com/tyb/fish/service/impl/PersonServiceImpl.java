@@ -4,6 +4,9 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sun.image.codec.jpeg.JPEGEncodeParam;
+import com.tyb.fish.model.QueryFilter;
+import com.tyb.fish.model.QueryPage;
+import com.tyb.fish.model.QueryResult;
 import com.tyb.fish.service.interfaces.IPersonService;
 import com.tyb.fish.mapper.PersonMapper;
 import com.tyb.fish.model.Person;
@@ -49,5 +52,10 @@ public class PersonServiceImpl implements IPersonService {
         PageHelper.startPage(pageNum, pageSize, true);
         List<Person> personList = personMapper.getPersonList();
         return new PageInfo<Person>(personList);
+    }
+
+    @Override
+    public QueryResult<Person> selectWithCondition(QueryPage page) {
+       return personMapper.selectWithPage(page).ctorQueryResult();
     }
 }

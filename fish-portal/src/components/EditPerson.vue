@@ -6,6 +6,7 @@
     </div>
     <div>
       <button @click="editPerson">保存</button>
+     <router-link to="/">返回首页</router-link>
     </div>
   </div>
 </template>
