@@ -1,9 +1,6 @@
 package com.tyb.fish.mapper;
 
-import com.tyb.fish.model.Person;
-import com.tyb.fish.model.QueryFilter;
-import com.tyb.fish.model.QueryPage;
-import com.tyb.fish.model.QueryResult;
+import com.tyb.fish.model.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,10 +18,10 @@ public interface PersonMapper {
 
     int updateByPrimaryKey(Person record);
 
-    List<Person> getPersonList();
+    List<Person> getPersonList(QF_Person qfPerson);
 
     List<Person> queryPersonList();
 
-    QueryPage<Person> selectWithPage(@Param("page") QueryPage page);
+    PageaResult<Person> selectWithPage(@Param("queryPage") QF_Person qfPerson);
 
 }

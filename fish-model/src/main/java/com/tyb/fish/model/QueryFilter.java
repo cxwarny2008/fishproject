@@ -2,18 +2,22 @@ package com.tyb.fish.model;
 
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
 @Data
-public class QueryFilter {
+public class QueryFilter implements Serializable {
 
-    private Integer pageIndex;
+    private Integer pageIndex = 1;
 
-    private Integer pageSize;
+    private Integer pageSize = 10;
 
-    public QueryFilter(Integer pageIndex, Integer pageSize) {
-        this.setPageIndex(pageIndex);
-        this.setPageSize(pageSize);
+    private Integer totalRecord;
+
+    public Integer getBeginRow() {
+        return (pageIndex - 1) * pageSize;
+    }
+
+    public Integer getEndRow() {
+        return (pageIndex) * pageSize;
     }
 }

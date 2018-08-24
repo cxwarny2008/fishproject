@@ -4,12 +4,9 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.tyb.fish.model.QueryFilter;
-import com.tyb.fish.model.QueryPage;
-import com.tyb.fish.model.QueryResult;
+import com.tyb.fish.model.*;
 import com.tyb.fish.service.interfaces.IPersonService;
 import com.tyb.fish.mapper.PersonMapper;
-import com.tyb.fish.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +25,8 @@ public class PersonServiceImpl implements IPersonService {
     }
 
     @Override
-    public List<Person> getPersonList() {
-        return personMapper.getPersonList();
+    public List<Person> getPersonList(QF_Person qfPerson) {
+        return personMapper.getPersonList(qfPerson);
     }
 
     @Override
@@ -50,12 +47,12 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     public PageInfo<Person> queryPersonList(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize, true);
-        List<Person> personList = personMapper.getPersonList();
+        List<Person> personList = personMapper.queryPersonList();
         return new PageInfo<Person>(personList);
     }
 
     @Override
-    public QueryResult<Person> selectWithCondition(QueryPage page) {
-       return personMapper.selectWithPage(page).ctorQueryResult();
+    public QueryResult<Person> selectWithCondition(QF_Person page) {
+       return personMapper.selectWithPage(new QF_Person()).ctorQueryResult();
     }
 }

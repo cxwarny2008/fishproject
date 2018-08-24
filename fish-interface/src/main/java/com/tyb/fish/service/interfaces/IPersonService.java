@@ -1,17 +1,14 @@
 package com.tyb.fish.service.interfaces;
 
 import com.github.pagehelper.PageInfo;
-import com.tyb.fish.model.Person;
-import com.tyb.fish.model.QueryFilter;
-import com.tyb.fish.model.QueryPage;
-import com.tyb.fish.model.QueryResult;
+import com.tyb.fish.model.*;
 
 import java.util.List;
 
 public interface IPersonService {
     Person loadPersonBySysNo(int sysNo);
 
-    List<Person> getPersonList();
+    List<Person> getPersonList(QF_Person qfPerson);
 
     void insert(Person person);
 
@@ -21,5 +18,5 @@ public interface IPersonService {
 
     PageInfo<Person> queryPersonList(Integer pageNum, Integer pageSize);
 
-    QueryResult<Person> selectWithCondition(QueryPage page);
+    QueryResult<Person> selectWithCondition(QF_Person page);
 }

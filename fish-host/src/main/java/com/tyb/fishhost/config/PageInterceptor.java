@@ -1,26 +1,16 @@
 package com.tyb.fishhost.config;
 
-import com.tyb.fish.model.QueryPage;
-import org.apache.ibatis.executor.Executor;
+import com.tyb.fish.model.QueryFilter;
+import com.tyb.fish.model.PageaResult;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.*;
-import org.apache.ibatis.reflection.DefaultReflectorFactory;
 import org.apache.ibatis.reflection.MetaObject;
-import org.apache.ibatis.reflection.ReflectorFactory;
 import org.apache.ibatis.reflection.SystemMetaObject;
-import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
-import org.apache.ibatis.reflection.factory.ObjectFactory;
-import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
-import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
 import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
-import org.apache.ibatis.session.ResultHandler;
-import org.apache.ibatis.session.RowBounds;
 
 import java.sql.*;
 import java.util.List;
@@ -34,18 +24,23 @@ import java.util.Properties;
         @Signature(type = ResultSetHandler.class, method = "handleResultSets", args = {Statement.class})})
 public class PageInterceptor implements Interceptor {
 
-    private QueryPage page = null;
+    private ThreadLocal<QueryFilter> queryFilterThreadLocal = new ThreadLocal<QueryFilter>();
+
+    private String paramName = "delegate.boundSql.parameterObject.queryPage";
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         if (invocation.getTarget() instanceof StatementHandler) {
             StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
             MetaObject metaStatementHandler = SystemMetaObject.forObject(statementHandler);
-            Object paramObj = metaStatementHandler.getValue("delegate.boundSql.parameterObject.page");
-            if (!(paramObj instanceof QueryPage)) {
+            if (!metaStatementHandler.hasSetter(paramName)) {
                 return invocation.proceed();
             }
-            page = (QueryPage) paramObj;
+            Object paramObj = metaStatementHandler.getValue(paramName);
+            if (!(paramObj instanceof QueryFilter)) {
+                return invocation.proceed();
+            }
+            queryFilterThreadLocal.set((QueryFilter) paramObj);
             // 分离代理对象链(由于目标类可能被多个插件拦截，从而形成多次代理，通过下面的两次循环
             // 可以分离出最原始的的目标类)
             while (metaStatementHandler.hasGetter("h")) {
@@ -63,21 +58,23 @@ public class PageInterceptor implements Interceptor {
             // 分页参数作为参数对象parameterObject的一个属性
             String sql = boundSql.getSql();
             // 重写sql
-            String pageSql = buildPageSql(sql, page);
+            String pageSql = buildPageSql(sql, queryFilterThreadLocal.get());
             //重写分页sql
             metaStatementHandler.setValue("delegate.boundSql.sql", pageSql);
             Connection connection = (Connection) invocation.getArgs()[0];
             // 重设分页参数里的总页数等
-            setPageParameter(sql, connection, mappedStatement, boundSql, page);
+            setPageParameter(sql, connection, mappedStatement, boundSql, queryFilterThreadLocal.get());
             // 将执行权交给下一个插件
             return invocation.proceed();
         } else if (invocation.getTarget() instanceof ResultSetHandler) {
-            Object result = invocation.proceed();
-            if (page != null) {
-                page.setResult((List<?>) result);
-                return page;
+            Object resultList = invocation.proceed();
+            QueryFilter queryFilter = queryFilterThreadLocal.get();
+            if (queryFilter != null) {
+                PageaResult<?> pageaResult = new PageaResult(queryFilter);
+                pageaResult.setResult((List) resultList);
+                return pageaResult;
             }
-            return result;
+            return resultList;
         }
         return null;
     }
@@ -98,7 +95,7 @@ public class PageInterceptor implements Interceptor {
      * @param page
      * @return
      */
-    private String buildPageSql(String sql, QueryPage page) {
+    private String buildPageSql(String sql, QueryFilter page) {
         StringBuilder pageSql = new StringBuilder(200);
         pageSql.append("select * from (");
         pageSql.append(sql);
@@ -117,7 +114,7 @@ public class PageInterceptor implements Interceptor {
      * @param page
      */
     private void setPageParameter(String sql, Connection connection, MappedStatement mappedStatement,
-                                  BoundSql boundSql, QueryPage page) throws SQLException {
+                                  BoundSql boundSql, QueryFilter page) throws SQLException {
         // 记录总记录数
         String countSql = "select count(0) from (" + sql + ") temp";
         PreparedStatement countStmt = null;

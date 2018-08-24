@@ -1,16 +1,13 @@
 package com.tyb.fishhost.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
-import com.netflix.ribbon.proxy.annotation.Var;
-import com.tyb.fish.model.QueryFilter;
-import com.tyb.fish.model.QueryPage;
+import com.tyb.fish.model.Person;
+import com.tyb.fish.model.QF_Person;
+import com.tyb.fish.model.PageaResult;
 import com.tyb.fish.model.QueryResult;
 import com.tyb.fish.service.interfaces.IPersonService;
-import com.tyb.fish.model.Person;
 import com.tyb.fishhost.depend.IComputeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -54,18 +51,20 @@ public class PersonController {
     }
 
     @RequestMapping("list")
-    public List<Person> GetPersonList() {
-        return personService.getPersonList();
+    public List<Person> GetPersonList(String name) {
+        QF_Person qfPerson= new QF_Person();
+        qfPerson.setName(name);
+        return personService.getPersonList(qfPerson);
     }
 
     @RequestMapping("page")
     public QueryResult<Person> PagePersonList() {
-        return personService.selectWithCondition(new QueryPage(1, 2));
+        return personService.selectWithCondition(new QF_Person());
     }
 
     @RequestMapping("pagelist")
-    public QueryPage<Person> pageList() throws JsonProcessingException {
-        QueryPage<Person> page = new QueryPage<Person>();
+    public PageaResult<Person> pageList() throws JsonProcessingException {
+        PageaResult<Person> page = new PageaResult<Person>();
         List<Person> personList = new ArrayList<Person>();
         Person person = new Person();
         person.setName("sdf");

@@ -9,46 +9,29 @@ import java.util.*;
  * Created by liubo on 2015/12/26.
  */
 @Data
-public class QueryPage<T> implements List<T>, Serializable {
+public class PageaResult<T> implements List<T>, Serializable {
     private int pageSize = 20;
     private int currentPageNo = 1;
     private int totalRecord;
-    private String pageHtml;
+    private int beginRow;
+    private int endRow;
     private List<T> result;
 
-    public QueryPage() {
+    public PageaResult() {
         this.result = new ArrayList<T>();
     }
 
-    public QueryPage(Integer pageIndex, Integer pageSize) {
-        this.currentPageNo = pageIndex;
-        this.pageSize = pageSize;
+    public PageaResult(QueryFilter queryFilter) {
+        this.currentPageNo = queryFilter.getPageIndex();
+        this.pageSize = queryFilter.getPageSize();
+        this.totalRecord=queryFilter.getTotalRecord();
         this.result = new ArrayList<T>();
-    }
-
-    public QueryPage(Integer totalRecord, List<T> result) {
-        this.totalRecord = totalRecord;
-        this.result = result;
     }
 
     public QueryResult<T> ctorQueryResult() {
         return new QueryResult<T>(this);
     }
 
-    /**
-     * 获取总页数
-     *
-     * @return int
-     */
-    public int getTotalPage() {
-        int totalPage = 0;
-        if (this.getTotalRecord() % this.pageSize == 0) {
-            totalPage = this.getTotalRecord() / this.pageSize;
-        } else {
-            totalPage = this.getTotalRecord() / this.pageSize + 1;
-        }
-        return totalPage;
-    }
 
     /**
      * 获取开始行
@@ -184,8 +167,4 @@ public class QueryPage<T> implements List<T>, Serializable {
         return this.result.subList(fromIndex, toIndex);
     }
 
-    @Override
-    public String toString() {
-        return "total=" + this.getTotalRecord() + this.result.toString();
-    }
 }
