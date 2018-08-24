@@ -28,7 +28,7 @@ public class PageaResult<T> implements List<T>, Serializable {
         this.result = new ArrayList<T>();
     }
 
-    public QueryResult<T> ctorQueryResult() {
+    public QueryResult<T> getQueryResult() {
         return new QueryResult<T>(this);
     }
 

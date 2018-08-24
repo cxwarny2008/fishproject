@@ -1,16 +1,15 @@
 package com.tyb.fish.service.impl;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.tyb.fish.model.*;
-import com.tyb.fish.service.interfaces.IPersonService;
 import com.tyb.fish.mapper.PersonMapper;
+import com.tyb.fish.model.Person;
+import com.tyb.fish.model.QF_Person;
+import com.tyb.fish.model.QueryResult;
+import com.tyb.fish.service.interfaces.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.lang.model.element.VariableElement;
 import java.util.List;
 
 @Service(value = "personService")
@@ -53,6 +52,6 @@ public class PersonServiceImpl implements IPersonService {
 
     @Override
     public QueryResult<Person> selectWithCondition(QF_Person page) {
-       return personMapper.selectWithPage(new QF_Person()).ctorQueryResult();
+       return personMapper.selectWithPage(new QF_Person()).getQueryResult();
     }
 }
