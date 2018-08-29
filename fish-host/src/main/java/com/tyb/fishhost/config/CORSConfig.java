@@ -7,6 +7,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import static org.springframework.web.cors.CorsConfiguration.ALL;
 
+/**
+ * Cors跨越配置类
+ * @author Administrator
+ */
 @Configuration
 public class CORSConfig {
 

@@ -26,7 +26,7 @@ public class PageInterceptor implements Interceptor {
 
     private ThreadLocal<QueryFilter> queryFilterThreadLocal = new ThreadLocal<QueryFilter>();
 
-    private String paramName = "delegate.boundSql.parameterObject.queryPage";
+    private String paramName = "delegate.boundSql.parameterObject.filte";
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {

@@ -1,19 +1,15 @@
 package com.tyb.fishhost.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.pagehelper.PageInfo;
 import com.tyb.fish.model.Person;
 import com.tyb.fish.model.QF_Person;
-import com.tyb.fish.model.PageaResult;
 import com.tyb.fish.model.QueryResult;
 import com.tyb.fish.service.interfaces.IPersonService;
 import com.tyb.fishhost.depend.IComputeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author 陈小伟
@@ -23,6 +19,7 @@ import java.util.List;
  * @Description: 启动类
  * @date 2018-08-17
  */
+@Api(value = "Person服务", description = "PersonRest接口")
 @RestController
 @RequestMapping("person")
 public class PersonController {
@@ -30,69 +27,76 @@ public class PersonController {
     @Autowired
     private IComputeService computeService;
 
-
     @Autowired
     private IPersonService personService;
 
-    @RequestMapping("get")
+    @ApiOperation(value = "Feign客户端测试类")
+    @RequestMapping(value = "get", method = RequestMethod.GET)
     public String getPersonName() {
         int result = computeService.add(100, 100);
         return "test" + String.valueOf(result);
     }
 
-    @RequestMapping("load/{sysNo}")
+    /**
+     * 通过SysNo加载人员信息
+     *
+     * @param sysNo
+     * @return Person
+     */
+    @ApiOperation(value = "加载人员信息")
+    @ApiImplicitParam(name = "sysNo", value = "用户sysNo", required = true, dataType = "Integer", paramType = "path")
+    @RequestMapping(value = "load/{sysNo}", method = RequestMethod.GET)
     public Person loadPerson(@PathVariable int sysNo) {
         return personService.loadPersonBySysNo(sysNo);
     }
 
-    @RequestMapping("query")
-    public PageInfo<Person> QueryPersonList(Integer pageNum, Integer pageSize) {
-        return personService.queryPersonList(pageNum, pageSize);
-    }
-
-    @RequestMapping("list")
-    public List<Person> GetPersonList(String name) {
-        QF_Person qfPerson= new QF_Person();
-        qfPerson.setName(name);
-        return personService.getPersonList(qfPerson);
-    }
-
-    @RequestMapping("page")
-    public QueryResult<Person> PagePersonList() {
-        return personService.selectWithCondition(new QF_Person());
-    }
-
-    @RequestMapping("pagelist")
-    public PageaResult<Person> pageList() throws JsonProcessingException {
-        PageaResult<Person> page = new PageaResult<Person>();
-        List<Person> personList = new ArrayList<Person>();
-        Person person = new Person();
-        person.setName("sdf");
-        personList.add(person);
-
-        page.setTotalRecord(100);
-        page.setResult(personList);
-
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(page);
-
-        return page;
-    }
-
+    /**
+     * 新增人员
+     *
+     * @param person
+     */
+    @ApiOperation(value = "新增人员")
+    @ApiImplicitParam(name = "person", value = "Person属性值", required = true, dataType = "Person")
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public void AddPerson(@RequestBody Person person) {
-        personService.insert(person);
+    public void addPerson(@RequestBody Person person) {
+        personService.insertPerson(person);
     }
 
-
+    /**
+     * 编辑人员信息
+     *
+     * @param person
+     */
+    @ApiOperation(value = "编辑人员信息")
+    @ApiImplicitParam(name = "person", value = "Person属性值", required = true, dataType = "Person")
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public void EditPerson(@RequestBody Person person) {
-        personService.updateByPrimaryKey(person);
+    public void editPerson(@RequestBody Person person) {
+        personService.updatePerson(person);
     }
 
-
+    /**
+     * 删除人员信息
+     *
+     * @param sysNo
+     */
+    @ApiOperation(value = "删除人员信息")
+    @ApiImplicitParam(name = "sysNo", value = "sysNo值", required = true, dataType = "Integer", paramType = "path")
     @RequestMapping(value = "delete/{sysNo}", method = RequestMethod.POST)
-    public void DeletePerson(@PathVariable int sysNo) {
-        personService.deleteByPrimaryKey(sysNo);
+    public void deletePerson(@PathVariable int sysNo) {
+        personService.deletePerson(sysNo);
     }
+
+    /**
+     * 分页查询人员信息
+     *
+     * @param qfPerson
+     * @return
+     */
+    @ApiOperation(value = "分页查询人员信息")
+    @ApiImplicitParam(name = "qfPerson", value = "qfPerson属性值", required = true, dataType = "QF_Person")
+    @RequestMapping(value = "query", method = RequestMethod.POST)
+    public QueryResult<Person> QueryPersonList(QF_Person qfPerson) {
+        return personService.queryPersonList(qfPerson);
+    }
+
 }

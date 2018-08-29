@@ -6,22 +6,17 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface PersonMapper {
-    int deleteByPrimaryKey(Integer sysNo);
 
-    int insert(Person record);
+    int deletePerson(Integer sysNo);
 
-    int insertSelective(Person record);
+    int insertPerson(Person record);
 
-    Person selectByPrimaryKey(Integer sysNo);
+    Person loadPersonBySysNo(Integer sysNo);
 
-    int updateByPrimaryKeySelective(Person record);
-
-    int updateByPrimaryKey(Person record);
+    int updatePerson(Person record);
 
     List<Person> getPersonList(QF_Person qfPerson);
 
-    List<Person> queryPersonList();
-
-    PageaResult<Person> selectWithPage(@Param("queryPage") QF_Person qfPerson);
+    PageaResult<Person> queryPersonList(@Param("filte") QF_Person qfPerson);
 
 }

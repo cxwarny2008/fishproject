@@ -12,46 +12,88 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * PersonService
+ *
+ * @author Garry
+ */
 @Service(value = "personService")
 public class PersonServiceImpl implements IPersonService {
 
     @Autowired
     private PersonMapper personMapper;
 
+    /**
+     * 加载人员信息
+     *
+     * @param sysNo
+     * @return
+     */
     @Override
     public Person loadPersonBySysNo(int sysNo) {
-        return personMapper.selectByPrimaryKey(1);
+        return personMapper.loadPersonBySysNo(sysNo);
     }
 
+    /**
+     * 获取人员列表
+     *
+     * @param qfPerson
+     * @return
+     */
     @Override
     public List<Person> getPersonList(QF_Person qfPerson) {
         return personMapper.getPersonList(qfPerson);
     }
 
+    /**
+     * 新增人员
+     *
+     * @param person
+     */
     @Override
-    public void insert(Person person) {
-        personMapper.insert(person);
+    public void insertPerson(Person person) {
+        personMapper.insertPerson(person);
     }
 
+    /**
+     * 更新人员
+     *
+     * @param person
+     */
     @Override
-    public void updateByPrimaryKey(Person person) {
-        personMapper.updateByPrimaryKey(person);
+    public void updatePerson(Person person) {
+        personMapper.updatePerson(person);
     }
 
+    /**
+     * 删除人员
+     *
+     * @param sysNo
+     */
     @Override
-    public void deleteByPrimaryKey(int sysNo) {
-        personMapper.deleteByPrimaryKey(sysNo);
+    public void deletePerson(int sysNo) {
+        personMapper.deletePerson(sysNo);
     }
 
+    /**
+     * 分页查询人员
+     *
+     * @param filter
+     * @return
+     */
     @Override
-    public PageInfo<Person> queryPersonList(Integer pageNum, Integer pageSize) {
+    public QueryResult<Person> queryPersonList(QF_Person filter) {
+        return personMapper.queryPersonList(filter).getQueryResult();
+    }
+
+   /*
+    @Override
+    public PageInfo<Person> queryPersonListPageHelper(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize, true);
         List<Person> personList = personMapper.queryPersonList();
         return new PageInfo<Person>(personList);
     }
+    */
 
-    @Override
-    public QueryResult<Person> selectWithCondition(QF_Person page) {
-       return personMapper.selectWithPage(new QF_Person()).getQueryResult();
-    }
+
 }

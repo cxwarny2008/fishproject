@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Primary;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
+/**
+ * DruidDB配置
+ */
 @Configuration
 public class DruidDBConfig {
 
@@ -57,7 +60,7 @@ public class DruidDBConfig {
 
     @Bean     //声明其为Bean实例
     @Primary  //在同样的DataSource中，首先使用被标注的DataSource
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DruidDataSource datasource = new DruidDataSource();
         datasource.setUrl(this.dbUrl);
         datasource.setUsername(username);
@@ -81,7 +84,7 @@ public class DruidDBConfig {
         try {
             datasource.setFilters(filters);
         } catch (SQLException e) {
-            logger.info("druid configuration initialization filter: "+ e);
+            logger.info("druid configuration initialization filter: " + e);
         }
         datasource.setConnectionProperties(connectionProperties);
         return datasource;

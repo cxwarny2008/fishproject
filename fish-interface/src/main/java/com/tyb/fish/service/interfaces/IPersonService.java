@@ -5,18 +5,21 @@ import com.tyb.fish.model.*;
 
 import java.util.List;
 
+/**
+ * Person服务接口类
+ */
 public interface IPersonService {
+
     Person loadPersonBySysNo(int sysNo);
 
     List<Person> getPersonList(QF_Person qfPerson);
 
-    void insert(Person person);
+    void insertPerson(Person person);
 
-    void updateByPrimaryKey(Person person);
+    void updatePerson(Person person);
 
-    void deleteByPrimaryKey(int sysNo);
+    void deletePerson(int sysNo);
 
-    PageInfo<Person> queryPersonList(Integer pageNum, Integer pageSize);
+    QueryResult<Person> queryPersonList(QF_Person page);
 
-    QueryResult<Person> selectWithCondition(QF_Person page);
 }

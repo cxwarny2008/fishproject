@@ -8,7 +8,7 @@
     <sql id="Base_Column_List">
     SysNo, Name
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="loadPersonBySysNo" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from tb_person
@@ -24,53 +24,25 @@
             </if>
         </where>
     </select>
-    <select id="queryPersonList" resultType="com.tyb.fish.model.Person">
+    <select id="queryPersonList" resultType="com.tyb.fish.model.Person" parameterType="com.tyb.fish.model.QF_Person">
         select
         <include refid="Base_Column_List"/>
         from tb_person
+        <where>
+            <if test="filte.name!=null">
+                name = #{filte.name}
+            </if>
+        </where>
     </select>
-    <select id="selectWithPage" resultType="com.tyb.fish.model.Person">
-        select
-        <include refid="Base_Column_List"/>
-        from tb_person
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <delete id="deletePerson" parameterType="java.lang.Integer">
     delete from tb_person
     where SysNo = #{sysNo,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.tyb.fish.model.Person">
+    <insert id="insertPerson" parameterType="com.tyb.fish.model.Person">
     insert into tb_person (SysNo, Name)
     values (#{sysNo,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
   </insert>
-    <insert id="insertSelective" parameterType="com.tyb.fish.model.Person">
-        insert into tb_person
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="sysNo != null">
-                SysNo,
-            </if>
-            <if test="name != null">
-                Name,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="sysNo != null">
-                #{sysNo,jdbcType=INTEGER},
-            </if>
-            <if test="name != null">
-                #{name,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.tyb.fish.model.Person">
-        update tb_person
-        <set>
-            <if test="name != null">
-                Name = #{name,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where SysNo = #{sysNo,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.tyb.fish.model.Person">
+    <update id="updatePerson" parameterType="com.tyb.fish.model.Person">
     update tb_person
     set Name = #{name,jdbcType=VARCHAR}
     where SysNo = #{sysNo,jdbcType=INTEGER}

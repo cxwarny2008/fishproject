@@ -6,7 +6,8 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Created by liubo on 2015/12/26.
+ * PageInterceptor插件分页返回的结果类型
+ * @param <T>
  */
 @Data
 public class PageaResult<T> implements List<T>, Serializable {
@@ -22,7 +23,7 @@ public class PageaResult<T> implements List<T>, Serializable {
     }
 
     public PageaResult(QueryFilter queryFilter) {
-        this.currentPageNo = queryFilter.getPageIndex();
+        this.currentPageNo = queryFilter.getPageNo();
         this.pageSize = queryFilter.getPageSize();
         this.totalRecord=queryFilter.getTotalRecord();
         this.result = new ArrayList<T>();
