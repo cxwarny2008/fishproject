@@ -1,37 +1,31 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Test from '@/components/Test'
-import Home from '@/components/Home'
-import About from '@/components/About'
-import Edit_Person from  '@/components/EditPerson'
+import layout from '@/layout/layout.vue'
+import person from '@/views/person/index.vue'
+import add_person from '@/views/person/addPerson.vue'
+import login from '@/views/login.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {path: '/', redirect: '/person'},
+
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: '人员管理',
+      component: layout,
+      children: [
+        {path: '/person', component: person, name: '人员信息', meta: {requireAuth: true}},
+        {path: '/addperson', component: add_person, name: '新增人员', meta: {requireAuth: true}}
+      ]
     },
     {
-      path: '/test',
-      name: 'Test',
-      component: Test
-    },
-    {
-      path: '/home',
-      component: Home
-    },
-    {
-      path: '/about',
-      component: About
-    },
-    {
-      path: '/editPerson',
-      name:'edit-person',
-      component: Edit_Person
+      path: '/login',
+      name: '登录',
+      component: login,
+      hidden: true,
+      meta: {requireAuth: false}
     }
   ]
 })

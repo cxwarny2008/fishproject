@@ -1,12 +1,12 @@
 <template>
-    <div>home23232
-      <router-link to="about">Go to about</router-link>
+    <div>
+      新增人员
     </div>
 </template>
 
 <script>
     export default {
-        name: "home"
+        name: "addPerson"
     }
 </script>
 

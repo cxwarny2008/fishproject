@@ -4,9 +4,13 @@
     <resultMap id="BaseResultMap" type="com.tyb.fish.model.Person">
         <id column="SysNo" jdbcType="INTEGER" property="sysNo"/>
         <result column="Name" jdbcType="VARCHAR" property="name"/>
+        <result column="Gender" jdbcType="INTEGER" property="gender"/>
+        <result column="Age" jdbcType="INTEGER" property="age"/>
+        <result column="Birthday" jdbcType="DATE" property="birthday"/>
+        <result column="Address" jdbcType="DATE" property="address"/>
     </resultMap>
     <sql id="Base_Column_List">
-    SysNo, Name
+    SysNo, Name, Gender,Age,Birthday,Address
   </sql>
     <select id="loadPersonBySysNo" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -19,7 +23,7 @@
         <include refid="Base_Column_List"/>
         from tb_person
         <where>
-            <if test="name!=null">
+            <if test="name!=null and '' !=name">
                 name = #{name}
             </if>
         </where>
@@ -29,8 +33,8 @@
         <include refid="Base_Column_List"/>
         from tb_person
         <where>
-            <if test="filte.name!=null">
-                name = #{filte.name}
+            <if test="filter.name!=null and '' !=filter.name">
+                name = #{filter.name}
             </if>
         </where>
     </select>
@@ -39,12 +43,24 @@
     where SysNo = #{sysNo,jdbcType=INTEGER}
   </delete>
     <insert id="insertPerson" parameterType="com.tyb.fish.model.Person">
-    insert into tb_person (SysNo, Name)
-    values (#{sysNo,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
+   INSERT INTO tb_person ( SysNo, NAME, Gender, Age, Birthday, Address )
+VALUES
+	( #{sysNo,jdbcType=INTEGER},
+#{name,jdbcType=VARCHAR},
+#{gender,jdbcType=INTEGER},
+#{age,jdbcType=INTEGER},
+#{birthday,jdbcType=DATE},
+#{address,jdbcType=VARCHAR}
+	)
   </insert>
     <update id="updatePerson" parameterType="com.tyb.fish.model.Person">
-    update tb_person
-    set Name = #{name,jdbcType=VARCHAR}
-    where SysNo = #{sysNo,jdbcType=INTEGER}
+   UPDATE tb_person
+SET NAME = #{name,jdbcType=VARCHAR},
+Gender = #{gender,jdbcType=INTEGER},
+Age = #{age,jdbcType=INTEGER},
+Birthday = #{birthday,jdbcType=DATE},
+Address = #{address,jdbcType=VARCHAR}
+WHERE
+	SysNo = #{sysNo,jdbcType=INTEGER}
   </update>
 </mapper>

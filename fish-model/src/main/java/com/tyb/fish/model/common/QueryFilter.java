@@ -1,4 +1,4 @@
-package com.tyb.fish.model;
+package com.tyb.fish.model.common;
 
 import lombok.Data;
 
@@ -31,13 +31,5 @@ public class QueryFilter implements Serializable {
      */
     public Integer getBeginRow() {
         return (pageNo - 1) * pageSize;
-    }
-
-    /**
-     * 计算结束行
-     * @return
-     */
-    public Integer getEndRow() {
-        return (pageNo) * pageSize;
     }
 }

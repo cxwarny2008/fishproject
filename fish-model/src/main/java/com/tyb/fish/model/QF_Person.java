@@ -1,5 +1,6 @@
 package com.tyb.fish.model;
 
+import com.tyb.fish.model.common.QueryFilter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

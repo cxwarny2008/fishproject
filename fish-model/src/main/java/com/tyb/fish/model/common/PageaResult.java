@@ -1,4 +1,4 @@
-package com.tyb.fish.model;
+package com.tyb.fish.model.common;
 
 import lombok.Data;
 

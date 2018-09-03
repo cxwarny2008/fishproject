@@ -1,11 +1,9 @@
 package com.tyb.fish.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.tyb.fish.mapper.PersonMapper;
 import com.tyb.fish.model.Person;
 import com.tyb.fish.model.QF_Person;
-import com.tyb.fish.model.QueryResult;
+import com.tyb.fish.model.common.QueryResult;
 import com.tyb.fish.service.interfaces.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +12,6 @@ import java.util.List;
 
 /**
  * PersonService
- *
  * @author Garry
  */
 @Service(value = "personService")

@@ -1,7 +1,7 @@
 package com.tyb.fishhost.config;
 
-import com.tyb.fish.model.QueryFilter;
-import com.tyb.fish.model.PageaResult;
+import com.tyb.fish.model.common.QueryFilter;
+import com.tyb.fish.model.common.PageaResult;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
@@ -26,7 +26,7 @@ public class PageInterceptor implements Interceptor {
 
     private ThreadLocal<QueryFilter> queryFilterThreadLocal = new ThreadLocal<QueryFilter>();
 
-    private String paramName = "delegate.boundSql.parameterObject.filte";
+    private String paramName = "delegate.boundSql.parameterObject.filter";
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
@@ -100,7 +100,7 @@ public class PageInterceptor implements Interceptor {
         pageSql.append("select * from (");
         pageSql.append(sql);
         pageSql.append(" ) temp limit ").append(page.getBeginRow());
-        pageSql.append(" , ").append(page.getEndRow());
+        pageSql.append(" , ").append(page.getPageSize());
         return pageSql.toString();
     }
 

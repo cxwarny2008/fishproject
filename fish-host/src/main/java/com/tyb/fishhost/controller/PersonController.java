@@ -2,7 +2,7 @@ package com.tyb.fishhost.controller;
 
 import com.tyb.fish.model.Person;
 import com.tyb.fish.model.QF_Person;
-import com.tyb.fish.model.QueryResult;
+import com.tyb.fish.model.common.QueryResult;
 import com.tyb.fish.service.interfaces.IPersonService;
 import com.tyb.fishhost.depend.IComputeService;
 import io.swagger.annotations.Api;
@@ -95,7 +95,7 @@ public class PersonController {
     @ApiOperation(value = "分页查询人员信息")
     @ApiImplicitParam(name = "qfPerson", value = "qfPerson属性值", required = true, dataType = "QF_Person")
     @RequestMapping(value = "query", method = RequestMethod.POST)
-    public QueryResult<Person> QueryPersonList(QF_Person qfPerson) {
+    public QueryResult<Person> QueryPersonList(@RequestBody QF_Person qfPerson) {
         return personService.queryPersonList(qfPerson);
     }
 

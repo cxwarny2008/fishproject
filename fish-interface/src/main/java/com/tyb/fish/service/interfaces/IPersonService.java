@@ -1,7 +1,7 @@
 package com.tyb.fish.service.interfaces;
 
-import com.github.pagehelper.PageInfo;
 import com.tyb.fish.model.*;
+import com.tyb.fish.model.common.QueryResult;
 
 import java.util.List;
 
