@@ -10,8 +10,10 @@
     </el-col>
     <el-col :span="4">
       <el-dropdown>
-        <span class="el-dropdown-link">
-          {{loginUser.userName}}
+        <span class="el-dropdown-link" >
+         <span v-if="loginUser">
+           {{loginUser.userName}}
+         </span>
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">

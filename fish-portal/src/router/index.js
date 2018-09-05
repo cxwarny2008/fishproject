@@ -10,7 +10,6 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {path: '/', redirect: '/person'},
-
     {
       path: '/',
       name: '人员管理',

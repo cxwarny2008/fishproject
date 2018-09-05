@@ -25,12 +25,12 @@ public class UserController {
      * @param loginUser
      * @return
      */
-    @RequestMapping(value = "login", method = RequestMethod.POST)
     @ApiOperation(value = "用户登录")
     @ApiImplicitParam(name = "loginUser", value = "用户账户与密码", required = true, dataType = "User")
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     public User Login(@RequestBody User loginUser) {
         loginUser.setUserId("cxw");
-        loginUser.setUserName("用户名称");
+        loginUser.setUserName("测试用户");
         loginUser.setPhone("15989877876");
         return loginUser;
     }

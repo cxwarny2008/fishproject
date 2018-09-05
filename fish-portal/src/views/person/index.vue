@@ -30,8 +30,8 @@
         </el-table-column>
         <el-table-column label="操作" width="150">
           <template slot-scope="scope">
-            <el-button size="small" @click="editPerson(slot-scope.$index, slot-scope.row)">编辑</el-button>
-            <el-button type="danger" size="small" @click="delPerson(slot-scope.$index, slot-scope.row)">删除</el-button>
+            <el-button size="small" @click="editPerson(scope.$index, scope.row)">编辑</el-button>
+            <el-button type="danger" size="small" @click="delPerson(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
