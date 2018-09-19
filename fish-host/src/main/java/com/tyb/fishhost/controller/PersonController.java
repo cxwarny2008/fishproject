@@ -30,6 +30,11 @@ public class PersonController {
     @Autowired
     private IPersonService personService;
 
+    /**
+     * Feign客户端测试类
+     *
+     * @return
+     */
     @ApiOperation(value = "Feign客户端测试类")
     @RequestMapping(value = "get", method = RequestMethod.GET)
     public String getPersonName() {
