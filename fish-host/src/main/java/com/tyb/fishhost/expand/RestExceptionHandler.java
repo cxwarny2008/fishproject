@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class RestExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public BaseResponse handleNotFoundException(Exception ex) {
+    public BaseResponse handleException(Exception ex) {
         BaseResponse responseMsg = new BaseResponse(ex.getMessage());
         return responseMsg;
     }
