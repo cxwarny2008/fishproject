@@ -2,6 +2,7 @@ package com.tyb.fish.model;
 
 import lombok.Data;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -34,6 +35,20 @@ public class Person {
      * 生日
      */
     private Date birthday;
+
+    /**
+     * 生日Str
+     */
+    private String birthdayStr;
+
+    public String getBirthdayStr() {
+        Date birthDate=this.getBirthday();
+        if (birthDate == null) {
+            return null;
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.format(birthDate);
+    }
 
     /**
      * 地址

@@ -24,7 +24,7 @@
         </el-table-column>
         <el-table-column prop="age" label="年龄">
         </el-table-column>
-        <el-table-column prop="birthday" label="生日">
+        <el-table-column prop="birthdayStr" label="生日">
         </el-table-column>
         <el-table-column prop="address" label="地址">
         </el-table-column>
