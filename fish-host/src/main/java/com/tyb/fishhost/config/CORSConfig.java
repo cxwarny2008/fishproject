@@ -9,6 +9,7 @@ import static org.springframework.web.cors.CorsConfiguration.ALL;
 
 /**
  * Cors跨越配置类
+ *
  * @author Administrator
  */
 @Configuration
@@ -22,8 +23,8 @@ public class CORSConfig {
                 registry.addMapping("/**")
                         .allowedOrigins(ALL)
                         .allowedMethods(ALL)
-                        .allowedHeaders(ALL)
-                        .allowCredentials(true);
+                        .allowedHeaders(ALL).
+                        allowCredentials(true);
             }
         };
     }
