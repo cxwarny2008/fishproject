@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author 陈小伟
  * @version V1.0
- * @Title: 启动类
+ * @Title: 人员服务类
  * @Package com.yzw.cloudhost
- * @Description: 启动类
+ * @Description: 人员信息管理
  * @date 2018-08-17
  */
 @Api(value = "Person服务", description = "PersonRest接口")

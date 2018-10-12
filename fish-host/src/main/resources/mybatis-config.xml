@@ -6,6 +6,10 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
         <setting name="cacheEnabled" value="false"/>
     </settings>
+    <typeHandlers>
+        <typeHandler javaType="com.tyb.fish.model.Enum.EGender"
+                     handler="com.tyb.fish.core.UniversalEnumHandler"></typeHandler>
+    </typeHandlers>
     <plugins>
         <plugin interceptor="com.tyb.fishhost.config.PageInterceptor"/>
     </plugins>

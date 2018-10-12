@@ -1,5 +1,7 @@
 package com.tyb.fish.model;
 
+import com.tyb.fish.core.DateHelper;
+import com.tyb.fish.model.Enum.EGender;
 import lombok.Data;
 
 import java.text.SimpleDateFormat;
@@ -24,7 +26,16 @@ public class Person {
     /**
      * 性别
      */
-    private Integer gender;
+    private EGender gender;
+
+    /**
+     * 性别Str
+     */
+    private String genderStr;
+
+    public String getGenderStr() {
+        return this.getGender().getDisplayName();
+    }
 
     /**
      * 年龄
@@ -42,12 +53,7 @@ public class Person {
     private String birthdayStr;
 
     public String getBirthdayStr() {
-        Date birthDate=this.getBirthday();
-        if (birthDate == null) {
-            return null;
-        }
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        return formatter.format(birthDate);
+        return DateHelper.DateToString(this.getBirthday(), "yyyy-MM-dd");
     }
 
     /**

@@ -10,6 +10,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>fish-core</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.4.6</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.4.6</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 
 </project>

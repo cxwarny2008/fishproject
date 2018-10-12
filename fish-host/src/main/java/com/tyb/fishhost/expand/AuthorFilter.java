@@ -1,11 +1,9 @@
 package com.tyb.fishhost.expand;
 
 
-import com.alibaba.fastjson.JSON;
-import org.springframework.http.HttpStatus;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 
-import javax.lang.model.util.ElementScanner6;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -86,7 +84,8 @@ public class AuthorFilter implements Filter {
                 try {
                     osw = new OutputStreamWriter(response.getOutputStream(), "UTF-8");
                     writer = new PrintWriter(osw, true);
-                    String jsonStr = JSON.toJSONString(res);
+                    ObjectMapper mapper = new ObjectMapper();
+                    String jsonStr = mapper.writeValueAsString(res);
                     writer.write(jsonStr);
                     writer.flush();
                     writer.close();
